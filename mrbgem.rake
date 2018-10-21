@@ -20,6 +20,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
+require "#{MRUBY_ROOT}/lib/mruby/source"
+
 def target_win32?
   return true if ENV['OS'] == 'Windows_NT'
   build.is_a?(MRuby::CrossBuild) && build.host_target.to_s =~ /mingw/
@@ -64,4 +66,6 @@ MRuby::Gem::Specification.new('mruby-r3') do |spec|
   end
 
   spec.objs += files
+
+  spec.add_test_dependency 'mruby-metaprog', core: 'mruby-metaprog' if MRuby::Source::MRUBY_VERSION > '1.4.1'
 end
